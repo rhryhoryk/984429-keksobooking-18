@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [raman hryhoryk](https://up.htmlacademy.ru/javascript/18/user/984429).
-* Наставник: `Неизвестно`.
+* Наставник: [Михаил Семиколенов](https://htmlacademy.ru/profile/id19706).
 
 ---
 
