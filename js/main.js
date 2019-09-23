@@ -34,7 +34,6 @@ var createAds = function (index) {
 
   ads.offer = {};
   ads.offer.title = 'ads №' + (index + 1);
-  // TODO разобраться с координатами
   ads.offer.address = '' + location.x + ',' + location.y;
   ads.offer.price = getRandomNumber(10000, 50000);
   ads.offer.type = OFFER_TYPES[getRandomNumber(0, OFFER_TYPES.length)];
@@ -60,11 +59,15 @@ var createAdsNearBy = function (numberOfAds) {
   return adsArr;
 };
 
-for (var i = 0; i < createAdsNearBy(NUMBER_OF_ADS_NEAR_BY).length; i++) {
+var renderAds = function (newAds) {
   var adsElement = pinTemplate.cloneNode(true);
-  adsElement.style.left = createAdsNearBy(NUMBER_OF_ADS_NEAR_BY)[i].location.x + 'px';
-  adsElement.style.top = createAdsNearBy(NUMBER_OF_ADS_NEAR_BY)[i].location.y + 'px';
-  adsElement.querySelector('img').src = createAdsNearBy(NUMBER_OF_ADS_NEAR_BY)[i].author.avatar;
-  adsElement.querySelector('img').alt = createAdsNearBy(NUMBER_OF_ADS_NEAR_BY)[i].offer.title;
+  adsElement.style.left = newAds.location.x + 'px';
+  adsElement.style.top = newAds.location.y + 'px';
+  adsElement.querySelector('img').src = newAds.author.avatar;
+  adsElement.querySelector('img').alt = newAds.offer.title;
   mapPins.appendChild(adsElement);
+};
+
+for (var i = 0; i < NUMBER_OF_ADS_NEAR_BY; i++) {
+  renderAds(createAdsNearBy(NUMBER_OF_ADS_NEAR_BY)[i]);
 }
