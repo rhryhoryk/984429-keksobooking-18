@@ -36,6 +36,7 @@ var setActiveMode = function () {
   setTagAvailable(formFieldsets);
   setTagAvailable(mapFiltersForm);
   map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
 };
 
 
