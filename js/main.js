@@ -1,7 +1,79 @@
 'use strict';
 
-document.querySelector('.map').classList.remove('map--faded');
+// ---------------------------------------------------неактивный режим----------------------------------------------------
 
+var formFieldsets = document.querySelectorAll('.ad-form fieldset');
+var mapFiltersForm = document.querySelector('.map__filters');
+var addressInput = document.querySelector('.ad-form input[name=address]');
+
+var setTagDesabled = function (arr) {
+  for (var i = 0; i < arr.length; i++) {
+    arr[i].disabled = true;
+  }
+};
+
+var setInactiveMode = function () {
+  setTagDesabled(formFieldsets);
+  setTagDesabled(mapFiltersForm);
+  addressInput.placeholder = 'x: 603 y: 407';
+  addressInput.readOnly = true;
+};
+
+setInactiveMode();
+
+// ---------------------------------------------------активный режим------------------------------------------------------
+
+var mapPinMain = document.querySelector('.map__pin--main');
+var map = document.querySelector('.map');
+
+var setTagAvailable = function (arr) {
+  for (var i = 0; i < arr.length; i++) {
+    arr[i].disabled = false;
+  }
+};
+
+var setActiveMode = function () {
+  setTagAvailable(formFieldsets);
+  setTagAvailable(mapFiltersForm);
+  map.classList.remove('map--faded');
+  adForm.classList.remove('ad-form--disabled');
+};
+
+
+// -----------------------------------------------------рассчитываем кординату-------------------------------------------
+
+var MAIN_PIN_SIZE = 65;
+var TAIL_PIN_SIZE = 22;
+
+
+var getPinCoordinates = function (pin) {
+  var positionX = '';
+  var leftPX = pin.style.left;
+  var positionY = '';
+  var topPX = pin.style.top;
+  for (var i = 0; i < leftPX.length; i++) {
+    if (isNaN(Number(leftPX[i])) === false) {
+      positionX += leftPX[i];
+    }
+  }
+  for (var j = 0; j < topPX.length; j++) {
+    if (isNaN(Number(topPX[j])) === false) {
+      positionY += topPX[j];
+    }
+  }
+  var realX = Math.round(Number(positionX) + (MAIN_PIN_SIZE / 2));
+  var realY = Math.round(Number(positionY) + MAIN_PIN_SIZE + TAIL_PIN_SIZE);
+
+  var position = 'x: ' + realX + ' y: ' + realY;
+  return position;
+};
+
+var setPinCoordinates = function () {
+  addressInput.placeholder = getPinCoordinates(mapPinMain);
+  addressInput.readOnly = true;
+};
+
+// --------------------------------------------------------отрисовываем похожие объявления----------------------------------------------------
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 var mapPins = document.querySelector('.map__pins');
 
@@ -61,6 +133,7 @@ var createAdsNearBy = function (numberOfAds) {
 
 var renderAds = function (newAds) {
   var adsElement = pinTemplate.cloneNode(true);
+
   adsElement.style.left = newAds.location.x + 'px';
   adsElement.style.top = newAds.location.y + 'px';
   adsElement.querySelector('img').src = newAds.author.avatar;
@@ -68,6 +141,55 @@ var renderAds = function (newAds) {
   mapPins.appendChild(adsElement);
 };
 
-for (var i = 0; i < NUMBER_OF_ADS_NEAR_BY; i++) {
-  renderAds(createAdsNearBy(NUMBER_OF_ADS_NEAR_BY)[i]);
-}
+var setAdsNearBy = function () {
+  for (var i = 0; i < NUMBER_OF_ADS_NEAR_BY; i++) {
+    renderAds(createAdsNearBy(NUMBER_OF_ADS_NEAR_BY)[i]);
+  }
+};
+
+// ---------------------------------------------------вешаем слушатель-------------------------------------
+mapPinMain.addEventListener('click', function () {
+  setActiveMode();
+  setPinCoordinates();
+  setAdsNearBy();
+});
+
+
+// ---------------------------------------------------------валидация-------------------------------------------
+
+var adForm = document.querySelector('.ad-form');
+var selectRoom = adForm.querySelector('.ad-form select[name=rooms]');
+var selectCapacity = adForm.querySelector('.ad-form select[name=capacity]');
+
+var validationRoomCapacity = function () {
+  if (selectRoom.value === '1') {
+    if (selectCapacity.value === '1') {
+      selectCapacity.setCustomValidity('');
+    } else {
+      selectCapacity.setCustomValidity('Увы, в таких апатраментах может жить только один гость');
+    }
+  }
+  if (selectRoom.value === '2') {
+    if (selectCapacity.value === '1' || selectCapacity.value === '2') {
+      selectCapacity.setCustomValidity('');
+    } else {
+      selectCapacity.setCustomValidity('Увы, в таких апатраментах может жить только один или два гостя');
+    }
+  }
+  if (selectRoom.value === '3') {
+    if (selectCapacity.value === '1' || selectCapacity.value === '2' || selectCapacity.value === '3') {
+      selectCapacity.setCustomValidity('');
+    } else {
+      selectCapacity.setCustomValidity('Увы, это апатраменты для гостей');
+    }
+  }
+  if (selectRoom.value === '100') {
+    if (selectCapacity.value === '0') {
+      selectCapacity.setCustomValidity('');
+    } else {
+      selectCapacity.setCustomValidity('Увы, это апатраменты не для гостей');
+    }
+  }
+};
+
+adForm.addEventListener('change', validationRoomCapacity);
