@@ -1,6 +1,7 @@
 'use strict';
 
 (function () {
+
   window.dataLoad = function (onload, onerror) {
     var URL = 'https://js.dump.academy/keksobooking/data';
     var xhr = new XMLHttpRequest();
