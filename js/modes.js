@@ -37,6 +37,6 @@
   window.mapModule.mapPinMain.addEventListener('click', function () {
     setActiveMode();
     window.formModule.setPinCoordinates();
-    window.mapModule.setAdsNearBy();
+    window.dataLoad(window.mapModule.onload, window.mapModule.onerror);
   });
 })();
