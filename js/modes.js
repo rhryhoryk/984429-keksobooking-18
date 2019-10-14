@@ -33,10 +33,18 @@
     window.formModule.adForm.classList.remove('ad-form--disabled');
   };
 
-
-  window.mapModule.mapPinMain.addEventListener('click', function () {
+  var onMainPinClick = function () {
     setActiveMode();
     window.formModule.setPinCoordinates();
+    window.dataLoad(window.mapModule.onload, window.mapModule.onerror);
+    window.mapModule.mapPinMain.removeEventListener('click', onMainPinClick);
+  };
+
+  window.mapModule.mapPinMain.addEventListener('click', onMainPinClick);
+
+
+  window.filter.housingTypeSelect.addEventListener('change', function () {
+
     window.dataLoad(window.mapModule.onload, window.mapModule.onerror);
   });
 })();
