@@ -8,7 +8,7 @@
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
-  var NUMBER_OF_ADS_NEAR_BY = 8;
+  var NUMBER_OF_ADS_NEAR_BY = 5;
   var MAIN_PIN_SIZE = 65;
   var TAIL_PIN_SIZE = 22;
 
@@ -23,8 +23,17 @@
 
   var onload = function (ads) {
     var fragment = document.createDocumentFragment();
+    var currentArr = window.filter.filterType(ads);
+    var oldPins = document.querySelectorAll('.map__pin');
     for (var i = 0; i < NUMBER_OF_ADS_NEAR_BY; i++) {
-      fragment.appendChild(renderAds(ads[i]));
+      if (currentArr[i] === undefined) {
+        continue;
+      } else {
+        for (var k = 1; k < oldPins.length; k++) {
+          oldPins[k].remove();
+        }
+        fragment.appendChild(renderAds(currentArr[i]));
+      }
     }
     mapPins.appendChild(fragment);
   };
