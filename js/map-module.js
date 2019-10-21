@@ -24,10 +24,14 @@
   var onload = function (ads) {
     var fragment = document.createDocumentFragment();
     var currentArr = window.filter.filterType(ads);
+    var oldPins = document.querySelectorAll('.map__pin');
     for (var i = 0; i < NUMBER_OF_ADS_NEAR_BY; i++) {
       if (currentArr[i] === undefined) {
         continue;
       } else {
+        for (var k = 1; k < oldPins.length; k++) {
+          oldPins[k].remove();
+        }
         fragment.appendChild(renderAds(currentArr[i]));
       }
     }
