@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+
   var getRandomNumber = function (minnum, maxnum) {
     return Math.floor(Math.random() * (maxnum - minnum)) + minnum;
   };
@@ -17,4 +18,5 @@
     getRandomNumber: getRandomNumber,
     createRandomArr: createRandomArr
   };
+
 })();
