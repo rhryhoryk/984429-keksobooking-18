@@ -9,6 +9,7 @@
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
   var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
+
   var NUMBER_OF_ADS_NEAR_BY = 5;
   var MAIN_PIN_SIZE = 65;
   var TAIL_PIN_SIZE = 22;
@@ -31,6 +32,7 @@
     infoCard.querySelector('.popup__text--capacity').innerHTML = data.offer.rooms + ' комнаты для ' + data.offer.guests + ' гостей';
     infoCard.querySelector('.popup__text--time').innerHTML = 'Заезд после ' + data.offer.checkin + ', выезд до ' + data.offer.checkout;
     infoCard.querySelector('.popup__description').innerHTML = data.offer.description;
+    infoCard.querySelector('img').src = data.author.avatar;
 
     var featureList = infoCard.querySelector('.popup__features');
     while (featureList.firstChild) {
@@ -75,19 +77,53 @@
   var onload = function (ads) {
     var fragment = document.createDocumentFragment();
     var currentArr = window.filter.filterType(ads);
+
     var oldPins = document.querySelectorAll('.map__pin');
     for (var i = 0; i < NUMBER_OF_ADS_NEAR_BY; i++) {
       if (currentArr[i] === undefined) {
         continue;
       } else {
-        for (var k = 1; k < oldPins.length; k++) {
-          oldPins[k].remove();
+        for (var j = 1; j < oldPins.length; j++) {
+          oldPins[j].remove();
         }
         fragment.appendChild(renderAds(currentArr[i]));
-        fragment.appendChild(renderCard(currentArr[i]));
       }
     }
     mapPins.appendChild(fragment);
+
+    var pins = document.querySelectorAll('.map__pin');
+
+    var onpinClick = function (pin, card) {
+      pin.addEventListener('click', function () {
+
+        var oldCard = document.querySelector('.map__card');
+        if (oldCard !== null) {
+          oldCard.remove();
+        }
+        fragment.appendChild(renderCard(card));
+        mapPins.appendChild(fragment);
+
+        var closePopupButton = document.querySelector('.popup__close');
+        var pinCard = document.querySelector('.map__card');
+
+        var onClosePopupButtonClick = function () {
+          pinCard.remove();
+        };
+
+        closePopupButton.addEventListener('click', onClosePopupButtonClick);
+        document.addEventListener('keydown', function (evt) {
+          if (evt.keyCode === 27) {
+            pinCard.remove();
+          }
+        });
+      });
+    };
+
+    for (var k = 1; k < pins.length; k++) {
+      var pin = pins[k];
+      var currentCard = currentArr[k - 1];
+      onpinClick(pin, currentCard);
+    }
   };
 
   var onerror = function () {

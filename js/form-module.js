@@ -4,8 +4,7 @@
   var formFieldsets = document.querySelectorAll('.ad-form fieldset');
 
   var addressInput = adForm.querySelector('.ad-form input[name=address]');
-  var selectRoom = adForm.querySelector('.ad-form select[name=rooms]');
-  var selectCapacity = adForm.querySelector('.ad-form select[name=capacity]');
+
 
   // -------------------------------------------------расчитываем координату главного пина и добовляем в форму---------------------------
   var getPinCoordinates = function (pin) {
@@ -32,10 +31,52 @@
 
   var setPinCoordinates = function () {
     addressInput.placeholder = getPinCoordinates(window.mapModule.mapPinMain);
+    addressInput.value = getPinCoordinates(window.mapModule.mapPinMain);
+
     addressInput.readOnly = true;
   };
 
+  // ---------------------------------------------------------валидация типжилья<->цена ------------------------------------------
+
+  var selectType = adForm.querySelector('#type');
+  var price = adForm.querySelector('#price');
+
+  var validationTypePrice = function () {
+    if (selectType.value === 'bungalo') {
+      price.attributes.placeholder.nodeValue = '0';
+    }
+    if (selectType.value === 'flat') {
+      price.attributes.placeholder.nodeValue = '1000';
+    }
+    if (selectType.value === 'house') {
+      price.attributes.placeholder.nodeValue = '5000';
+    }
+    if (selectType.value === 'palace') {
+      price.attributes.placeholder.nodeValue = '10000';
+    }
+  };
+
+  // ----------------------------------------------------------валидия въезд<->выезд ---------------------------------------------
+  var selectCheckIN = adForm.querySelector('#timein');
+  var selectCheckOUT = adForm.querySelector('#timeout');
+
+  var validationIn = function () {
+    if (selectCheckIN.value !== selectCheckOUT.value) {
+      selectCheckOUT.value = selectCheckIN.value;
+    }
+  };
+
+  var validationOut = function () {
+    if (selectCheckOUT.value !== selectCheckIN.value) {
+      selectCheckIN.value = selectCheckOUT.value;
+    }
+  };
+
   // ---------------------------------------------------------валидация комнаты<->гости ------------------------------------------
+
+  var selectRoom = adForm.querySelector('.ad-form select[name=rooms]');
+  var selectCapacity = adForm.querySelector('.ad-form select[name=capacity]');
+
 
   var validationRoomCapacity = function () {
     if (selectRoom.value === '1') {
@@ -69,6 +110,9 @@
   };
 
   adForm.addEventListener('change', validationRoomCapacity);
+  adForm.addEventListener('change', validationTypePrice);
+  selectCheckIN.addEventListener('change', validationIn);
+  selectCheckOUT.addEventListener('change', validationOut);
 
 
   window.formModule = {
