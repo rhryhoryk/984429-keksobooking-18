@@ -7,34 +7,39 @@
 
 
   // -------------------------------------------------расчитываем координату главного пина и добовляем в форму---------------------------
-  var getPinCoordinates = function (pin) {
-    var positionX = '';
-    var leftPX = pin.style.left;
-    var positionY = '';
-    var topPX = pin.style.top;
-    for (var i = 0; i < leftPX.length; i++) {
-      if (isNaN(Number(leftPX[i])) === false) {
-        positionX += leftPX[i];
-      }
-    }
-    for (var j = 0; j < topPX.length; j++) {
-      if (isNaN(Number(topPX[j])) === false) {
-        positionY += topPX[j];
-      }
-    }
-    var realX = Math.round(Number(positionX) + (window.mapModule.MAIN_PIN_SIZE / 2));
-    var realY = Math.round(Number(positionY) + window.mapModule.MAIN_PIN_SIZE + window.mapModule.TAIL_PIN_SIZE);
+  // var getPinCoordinates = function (pin) {
+  //   var positionX = '';
+  //   var leftPX = pin.style.left;
+  //   var positionY = '';
+  //   var topPX = pin.style.top;
+  //   for (var i = 0; i < leftPX.length; i++) {
+  //     if (isNaN(Number(leftPX[i])) === false) {
+  //       positionX += leftPX[i];
+  //     }
+  //   }
+  //   for (var j = 0; j < topPX.length; j++) {
+  //     if (isNaN(Number(topPX[j])) === false) {
+  //       positionY += topPX[j];
+  //     }
+  //   }
+  //   var realX = Math.round(Number(positionX) + (window.mapModule.MAIN_PIN_SIZE / 2));
+  //   var realY = Math.round(Number(positionY) + window.mapModule.MAIN_PIN_SIZE + window.mapModule.TAIL_PIN_SIZE);
 
-    var position = 'x: ' + realX + ' y: ' + realY;
-    return position;
-  };
+  //   var position = 'x: ' + realX + ' y: ' + realY;
+  //   console.log(pin);
+  //   return position;
+  // };
 
-  var setPinCoordinates = function () {
-    addressInput.placeholder = getPinCoordinates(window.mapModule.mapPinMain);
-    addressInput.value = getPinCoordinates(window.mapModule.mapPinMain);
+  // var getPinCoordinates = function (pin) {
+  //   console.dir(pin);
+  // }
 
-    addressInput.readOnly = true;
-  };
+  // var setPinCoordinates = function () {
+  //   addressInput.placeholder = window.util.getPinCoordinates(window.mapModule.mapPinMain);
+  //   addressInput.value = window.util.getPinCoordinates(window.mapModule.mapPinMain);
+
+  //   addressInput.readOnly = true;
+  // };
 
   // ---------------------------------------------------------валидация типжилья<->цена ------------------------------------------
 
@@ -119,6 +124,5 @@
     adForm: adForm,
     formFieldsets: formFieldsets,
     addressInput: addressInput,
-    setPinCoordinates: setPinCoordinates
   };
 })();
