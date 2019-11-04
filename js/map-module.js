@@ -13,6 +13,57 @@
   var NUMBER_OF_ADS_NEAR_BY = 5;
   var MAIN_PIN_SIZE = 65;
   var TAIL_PIN_SIZE = 22;
+  var MIN_HORIZONTAL_MAP_COORDINATE = 0;
+  var MAX_HORIZONTAL_MAP_COORDINATE = 1135;
+  var MIN_VERTICAL_MAP_COORDINATE = 130;
+  var MAX_VERTICAL_MAP_COORDINATE = 630;
+
+
+  mapPinMain.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+
+    var startCoord = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var onMouseMove = function (evtMove) {
+      evtMove.preventDefault();
+      var shift = {
+        x: startCoord.x - evtMove.clientX,
+        y: startCoord.y - evtMove.clientY
+      };
+      startCoord = {
+        x: evtMove.clientX,
+        y: evtMove.clientY
+      };
+      mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
+      if (mapPinMain.style.top.slice(0, -2) < MIN_VERTICAL_MAP_COORDINATE) {
+        mapPinMain.style.top = MIN_VERTICAL_MAP_COORDINATE + 'px';
+      }
+      if (mapPinMain.style.top.slice(0, -2) > MAX_VERTICAL_MAP_COORDINATE) {
+        mapPinMain.style.top = MAX_VERTICAL_MAP_COORDINATE + 'px';
+      }
+
+      mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
+      if (mapPinMain.style.left.slice(0, -2) < MIN_HORIZONTAL_MAP_COORDINATE) {
+        mapPinMain.style.left = MIN_HORIZONTAL_MAP_COORDINATE + 'px';
+      }
+      if (mapPinMain.style.left.slice(0, -2) > MAX_HORIZONTAL_MAP_COORDINATE) {
+        mapPinMain.style.left = MAX_HORIZONTAL_MAP_COORDINATE + 'px';
+      }
+    };
+
+    var onMouseUp = function (evtUp) {
+      evtUp.preventDefault();
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+      window.util.setPinCoordinates();
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
 
   var renderAds = function (newAds) {
     var adsElement = pinTemplate.cloneNode(true);

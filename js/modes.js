@@ -35,7 +35,7 @@
 
   var onMainPinClick = function () {
     setActiveMode();
-    window.formModule.setPinCoordinates();
+    window.util.setPinCoordinates();
     window.dataLoad(window.mapModule.onload, window.mapModule.onerror);
     window.mapModule.mapPinMain.removeEventListener('click', onMainPinClick);
   };
