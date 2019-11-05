@@ -45,12 +45,40 @@
     addressInput.readOnly = true;
   };
 
+  var setTagDesabled = function (arr) {
+    for (var i = 0; i < arr.length; i++) {
+      arr[i].disabled = true;
+    }
+  };
+
+  var setTagAvailable = function (arr) {
+    for (var i = 0; i < arr.length; i++) {
+      arr[i].disabled = false;
+    }
+  };
+
+  var setActiveMode = function () {
+    setTagAvailable(window.formModule.formFieldsets);
+    setTagAvailable(window.mapModule.mapFormFilters);
+    window.mapModule.map.classList.remove('map--faded');
+    window.formModule.adForm.classList.remove('ad-form--disabled');
+  };
+
+  var onMainPinClick = function () {
+    setActiveMode();
+    setPinCoordinates();
+    window.dataLoad(window.mapModule.onload, window.mapModule.onerror);
+    window.mapModule.mapPinMain.removeEventListener('click', onMainPinClick);
+  };
 
   window.util = {
     getRandomNumber: getRandomNumber,
     createRandomArr: createRandomArr,
     getPinCoordinates: getPinCoordinates,
-    setPinCoordinates: setPinCoordinates
+    setPinCoordinates: setPinCoordinates,
+    setTagDesabled: setTagDesabled,
+    setActiveMode: setActiveMode,
+    onMainPinClick: onMainPinClick
   };
 
 })();

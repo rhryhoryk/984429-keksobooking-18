@@ -13,6 +13,8 @@
   var NUMBER_OF_ADS_NEAR_BY = 5;
   var MAIN_PIN_SIZE = 65;
   var TAIL_PIN_SIZE = 22;
+  var MAP_START_X_COORDINATE = 570;
+  var MAP_START_Y_COORDINATE = 375;
   var MIN_HORIZONTAL_MAP_COORDINATE = 0;
   var MAX_HORIZONTAL_MAP_COORDINATE = 1135;
   var MIN_VERTICAL_MAP_COORDINATE = 130;
@@ -184,8 +186,11 @@
 
   window.mapModule = {
     map: map,
+    mapPins: mapPins,
     mapFormFilters: mapFormFilters,
     mapPinMain: mapPinMain,
+    MAP_START_X_COORDINATE: MAP_START_X_COORDINATE,
+    MAP_START_Y_COORDINATE: MAP_START_Y_COORDINATE,
     MAIN_PIN_SIZE: MAIN_PIN_SIZE,
     TAIL_PIN_SIZE: TAIL_PIN_SIZE,
     onload: onload,
