@@ -5,42 +5,6 @@
 
   var addressInput = adForm.querySelector('.ad-form input[name=address]');
 
-
-  // -------------------------------------------------расчитываем координату главного пина и добовляем в форму---------------------------
-  // var getPinCoordinates = function (pin) {
-  //   var positionX = '';
-  //   var leftPX = pin.style.left;
-  //   var positionY = '';
-  //   var topPX = pin.style.top;
-  //   for (var i = 0; i < leftPX.length; i++) {
-  //     if (isNaN(Number(leftPX[i])) === false) {
-  //       positionX += leftPX[i];
-  //     }
-  //   }
-  //   for (var j = 0; j < topPX.length; j++) {
-  //     if (isNaN(Number(topPX[j])) === false) {
-  //       positionY += topPX[j];
-  //     }
-  //   }
-  //   var realX = Math.round(Number(positionX) + (window.mapModule.MAIN_PIN_SIZE / 2));
-  //   var realY = Math.round(Number(positionY) + window.mapModule.MAIN_PIN_SIZE + window.mapModule.TAIL_PIN_SIZE);
-
-  //   var position = 'x: ' + realX + ' y: ' + realY;
-  //   console.log(pin);
-  //   return position;
-  // };
-
-  // var getPinCoordinates = function (pin) {
-  //   console.dir(pin);
-  // }
-
-  // var setPinCoordinates = function () {
-  //   addressInput.placeholder = window.util.getPinCoordinates(window.mapModule.mapPinMain);
-  //   addressInput.value = window.util.getPinCoordinates(window.mapModule.mapPinMain);
-
-  //   addressInput.readOnly = true;
-  // };
-
   // ---------------------------------------------------------валидация типжилья<->цена ------------------------------------------
 
   var selectType = adForm.querySelector('#type');
@@ -119,6 +83,66 @@
   selectCheckIN.addEventListener('change', validationIn);
   selectCheckOUT.addEventListener('change', validationOut);
 
+  // ---------------------------------------------------------- отправка формы ---------------------------------------------
+
+  var onMessageClick = function () {
+    document.body.removeChild(document.body.children[0]);
+    document.removeEventListener('click', onMessageClick);
+    document.removeEventListener('keydown', onMessageKeydown);
+  };
+
+  var onMessageKeydown = function (evt) {
+    if (evt.keyCode === 27) {
+      document.body.removeChild(document.body.children[0]);
+      document.removeEventListener('keydown', onMessageKeydown);
+      document.removeEventListener('click', onMessageClick);
+
+    }
+  };
+
+  var onFormSuccess = function () {
+    var successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
+
+    (function () {
+      var successMessage = successMessageTemplate.cloneNode(true);
+      document.body.insertAdjacentElement('afterbegin', successMessage);
+      document.addEventListener('click', onMessageClick);
+      document.addEventListener('keydown', onMessageKeydown);
+
+      window.mapModule.map.classList.add('map--faded');
+      window.mapModule.mapPinMain.style.left = window.mapModule.MAP_START_X_COORDINATE + 'px';
+      window.mapModule.mapPinMain.style.top = window.mapModule.MAP_START_Y_COORDINATE + 'px';
+      for (var i = window.mapModule.mapPins.children.length - 1; i >= 2; i--) {
+        window.mapModule.mapPins.removeChild(window.mapModule.mapPins.children[i]);
+      }
+      window.mapModule.mapPinMain.addEventListener('click', window.util.onMainPinClick);
+
+      adForm.reset();
+      adForm.classList.add('ad-form--disabled');
+      window.util.setTagDesabled(window.formModule.formFieldsets);
+      window.util.setTagDesabled(window.mapModule.mapFormFilters);
+      window.formModule.addressInput.placeholder = 'x: 603 y: 407';
+      window.formModule.addressInput.readOnly = true;
+    })();
+
+  };
+
+  var onFormError = function () {
+    var errrorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
+
+    (function () {
+      var errorMessage = errrorMessageTemplate.cloneNode(true);
+      document.body.insertAdjacentElement('afterbegin', errorMessage);
+      document.addEventListener('click', onMessageClick);
+      document.addEventListener('keydown', onMessageKeydown);
+    })();
+
+  };
+
+  adForm.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    window.dataSend(new FormData(adForm), onFormSuccess, onFormError);
+  });
 
   window.formModule = {
     adForm: adForm,
