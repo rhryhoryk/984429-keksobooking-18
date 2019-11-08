@@ -15,7 +15,7 @@
 
   window.mapModule.mapPinMain.addEventListener('click', window.util.onMainPinClick);
 
-  window.filter.housingTypeSelect.addEventListener('change', function () {
+  window.filter.mapFiltersForm.addEventListener('change', window.util.debounce(function () {
     window.dataLoad(window.mapModule.onload, window.mapModule.onerror);
-  });
+  }));
 })();
