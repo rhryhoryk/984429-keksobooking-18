@@ -90,8 +90,8 @@
       featureList.removeChild(featureList.firstChild);
     }
     var featureArr = [];
-    for (var i = 0; i < data.offer.features.length; i++) {
-      switch (data.offer.features[i]) {
+    data.offer.features.forEach(function (feature) {
+      switch (feature) {
         case 'wifi':
           featureArr += '<li class="popup__feature popup__feature--wifi"></li>';
           break;
@@ -113,13 +113,14 @@
         default:
           break;
       }
-    }
+    });
+
     featureList.innerHTML = featureArr;
 
     var photoArr = data.offer.photos;
-    for (var j = 0; j < photoArr.length; j++) {
-      infoCard.querySelector('.popup__photo').src = photoArr[j];
-    }
+    photoArr.forEach(function (photo) {
+      infoCard.querySelector('.popup__photo').src = photo;
+    });
 
     return infoCard;
   };
