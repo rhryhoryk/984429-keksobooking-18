@@ -44,13 +44,13 @@
     }
 
     if (houseFearures.some(function (element) {
-      return element.checked === true;
+      return element.checked;
     })) {
       arrToRender = data.filter(function (element) {
 
         var fearures = houseFearures.slice();
         fearures = fearures.filter(function (el) {
-          return el.checked === true;
+          return el.checked;
         });
         var feature = fearures[0].value;
         return element.offer.features.indexOf(feature) !== -1;

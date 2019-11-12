@@ -21,7 +21,7 @@
 
   window.dataSend = function (data, onSuccess, onError) {
     var URL = 'https://js.dump.academy/keksobooking';
-    var xhr = new this.XMLHttpRequest();
+    var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
