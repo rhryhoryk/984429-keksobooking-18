@@ -142,6 +142,9 @@
         fragment.appendChild(renderAds(currentArr[i]));
       }
     }
+    for (var iPin = window.mapModule.mapPins.children.length - 1; iPin >= 2; iPin--) {
+      window.mapModule.mapPins.removeChild(window.mapModule.mapPins.children[iPin]);
+    }
     mapPins.appendChild(fragment);
 
     var pins = document.querySelectorAll('.map__pin');

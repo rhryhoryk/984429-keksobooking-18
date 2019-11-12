@@ -10,7 +10,7 @@
   var houseFearures = Array.from(mapFiltersForm.querySelectorAll('.map__checkbox'));
 
   var filterAll = function (data) {
-    var arrToRender = data;
+    var arrToRender = data.slice();
 
     if (houseType.value !== 'any') {
       arrToRender = data.filter(function (element) {
