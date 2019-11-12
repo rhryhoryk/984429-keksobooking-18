@@ -1,20 +1,9 @@
 'use strict';
 (function () {
+  var DEBOUNCE_INTERVAL = 500;
+  var ESC_BUTTON = 27;
 
   var addressInput = document.querySelector('.ad-form input[name=address]');
-
-  var getRandomNumber = function (minnum, maxnum) {
-    return Math.floor(Math.random() * (maxnum - minnum)) + minnum;
-  };
-
-  var createRandomArr = function (arr) {
-    var newArr = [];
-    var newArrLength = getRandomNumber(1, arr.length);
-    for (var i = 0; i < newArrLength; i++) {
-      newArr.push(arr[i]);
-    }
-    return newArr;
-  };
 
   var getPinCoordinates = function (pin) {
     var positionX = '';
@@ -71,7 +60,6 @@
     window.mapModule.mapPinMain.removeEventListener('click', onMainPinClick);
   };
 
-  var DEBOUNCE_INTERVAL = 500;
 
   var debounce = function (cb) {
     var lastTimeout = null;
@@ -87,8 +75,7 @@
   };
 
   window.util = {
-    getRandomNumber: getRandomNumber,
-    createRandomArr: createRandomArr,
+    ESC_BUTTON: ESC_BUTTON,
     getPinCoordinates: getPinCoordinates,
     setPinCoordinates: setPinCoordinates,
     setTagDesabled: setTagDesabled,
