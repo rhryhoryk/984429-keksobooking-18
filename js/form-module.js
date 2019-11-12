@@ -13,15 +13,19 @@
   var validationTypePrice = function () {
     if (selectType.value === 'bungalo') {
       price.attributes.placeholder.nodeValue = '0';
+      price.attributes.min.nodeValue = '0';
     }
     if (selectType.value === 'flat') {
       price.attributes.placeholder.nodeValue = '1000';
+      price.attributes.min.nodeValue = '1000';
     }
     if (selectType.value === 'house') {
       price.attributes.placeholder.nodeValue = '5000';
+      price.attributes.min.nodeValue = '5000';
     }
     if (selectType.value === 'palace') {
       price.attributes.placeholder.nodeValue = '10000';
+      price.attributes.min.nodeValue = '10000';
     }
   };
 
