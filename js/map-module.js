@@ -165,7 +165,7 @@
 
         closePopupButton.addEventListener('click', onClosePopupButtonClick);
         document.addEventListener('keydown', function (evt) {
-          if (evt.keyCode === 27) {
+          if (evt.keyCode === window.util.ESC_BUTTON) {
             pinCard.remove();
           }
         });

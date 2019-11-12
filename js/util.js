@@ -1,6 +1,7 @@
 'use strict';
 (function () {
   var DEBOUNCE_INTERVAL = 500;
+  var ESC_BUTTON = 27;
 
   var addressInput = document.querySelector('.ad-form input[name=address]');
 
@@ -74,6 +75,7 @@
   };
 
   window.util = {
+    ESC_BUTTON: ESC_BUTTON,
     getPinCoordinates: getPinCoordinates,
     setPinCoordinates: setPinCoordinates,
     setTagDesabled: setTagDesabled,

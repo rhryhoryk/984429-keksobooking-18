@@ -96,7 +96,7 @@
   };
 
   var onMessageKeydown = function (evt) {
-    if (evt.keyCode === 27) {
+    if (evt.keyCode === window.util.ESC_BUTTON) {
       document.body.removeChild(document.body.children[0]);
       document.removeEventListener('keydown', onMessageKeydown);
       document.removeEventListener('click', onMessageClick);

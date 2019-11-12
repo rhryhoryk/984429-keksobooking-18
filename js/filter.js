@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+  var LOW_HOUSE_PRICE = 10000;
+  var HIGH_HOUSE_PRICE = 50000;
+
 
   var mapFiltersForm = document.querySelector('.map__filters');
   var houseType = mapFiltersForm.querySelector('.map__filters select[name=housing-type]');
@@ -20,9 +23,9 @@
 
     if (housePrice.value !== 'any') {
       arrToRender = data.filter(function (element) {
-        if (Number(element.offer.price) < 10000) {
+        if (Number(element.offer.price) < LOW_HOUSE_PRICE) {
           element.offer.price = 'low';
-        } else if (Number(element.offer.price) > 50000) {
+        } else if (Number(element.offer.price) > HIGH_HOUSE_PRICE) {
           element.offer.price = 'high';
         } else {
           element.offer.price = 'middle';
