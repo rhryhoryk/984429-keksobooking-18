@@ -40,11 +40,11 @@
         y: evtMove.clientY
       };
       mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
-      if (mapPinMain.style.top.slice(0, -2) < MIN_VERTICAL_MAP_COORDINATE) {
-        mapPinMain.style.top = MIN_VERTICAL_MAP_COORDINATE + 'px';
+      if (mapPinMain.style.top.slice(0, -2) < MIN_VERTICAL_MAP_COORDINATE - MAIN_PIN_SIZE - TAIL_PIN_SIZE) {
+        mapPinMain.style.top = MIN_VERTICAL_MAP_COORDINATE - MAIN_PIN_SIZE - TAIL_PIN_SIZE + 'px';
       }
-      if (mapPinMain.style.top.slice(0, -2) > MAX_VERTICAL_MAP_COORDINATE) {
-        mapPinMain.style.top = MAX_VERTICAL_MAP_COORDINATE + 'px';
+      if (mapPinMain.style.top.slice(0, -2) > MAX_VERTICAL_MAP_COORDINATE - MAIN_PIN_SIZE - TAIL_PIN_SIZE) {
+        mapPinMain.style.top = MAX_VERTICAL_MAP_COORDINATE - MAIN_PIN_SIZE - TAIL_PIN_SIZE + 'px';
       }
 
       mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
