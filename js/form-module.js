@@ -10,7 +10,7 @@
   var selectType = adForm.querySelector('#type');
   var price = adForm.querySelector('#price');
 
-  var validationTypePrice = function () {
+  var onTypePriceChange = function () {
     if (selectType.value === 'bungalo') {
       price.attributes.placeholder.nodeValue = '0';
       price.attributes.min.nodeValue = '0';
@@ -33,13 +33,13 @@
   var selectCheckIN = adForm.querySelector('#timein');
   var selectCheckOUT = adForm.querySelector('#timeout');
 
-  var validationIn = function () {
+  var onInChange = function () {
     if (selectCheckIN.value !== selectCheckOUT.value) {
       selectCheckOUT.value = selectCheckIN.value;
     }
   };
 
-  var validationOut = function () {
+  var onOutChange = function () {
     if (selectCheckOUT.value !== selectCheckIN.value) {
       selectCheckIN.value = selectCheckOUT.value;
     }
@@ -51,7 +51,7 @@
   var selectCapacity = adForm.querySelector('.ad-form select[name=capacity]');
 
 
-  var validationRoomCapacity = function () {
+  var onRoomCapacityChange = function () {
     if (selectRoom.value === '1') {
       if (selectCapacity.value === '1') {
         selectCapacity.setCustomValidity('');
@@ -82,10 +82,10 @@
     }
   };
 
-  adForm.addEventListener('change', validationRoomCapacity);
-  adForm.addEventListener('change', validationTypePrice);
-  selectCheckIN.addEventListener('change', validationIn);
-  selectCheckOUT.addEventListener('change', validationOut);
+  adForm.addEventListener('change', onRoomCapacityChange);
+  adForm.addEventListener('change', onTypePriceChange);
+  selectCheckIN.addEventListener('change', onInChange);
+  selectCheckOUT.addEventListener('change', onOutChange);
 
   // ---------------------------------------------------------- отправка формы ---------------------------------------------
 
