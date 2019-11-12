@@ -1,5 +1,7 @@
 'use strict';
 (function () {
+  var DEBOUNCE_INTERVAL = 500;
+
 
   var addressInput = document.querySelector('.ad-form input[name=address]');
 
@@ -71,7 +73,6 @@
     window.mapModule.mapPinMain.removeEventListener('click', onMainPinClick);
   };
 
-  var DEBOUNCE_INTERVAL = 500;
 
   var debounce = function (cb) {
     var lastTimeout = null;

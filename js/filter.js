@@ -43,7 +43,6 @@
       });
     }
 
-
     if (houseFearures.some(function (element) {
       return element.checked === true;
     })) {

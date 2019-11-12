@@ -1,15 +1,5 @@
 'use strict';
 (function () {
-  var map = document.querySelector('.map');
-  var mapFormFilters = document.querySelector('.map__filters');
-
-  var mapPinMain = map.querySelector('.map__pin--main');
-  var mapPins = map.querySelector('.map__pins');
-  var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-  var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
-
-
   var NUMBER_OF_ADS_NEAR_BY = 5;
   var MAIN_PIN_SIZE = 65;
   var TAIL_PIN_SIZE = 22;
@@ -20,6 +10,14 @@
   var MIN_VERTICAL_MAP_COORDINATE = 130;
   var MAX_VERTICAL_MAP_COORDINATE = 630;
 
+  var map = document.querySelector('.map');
+  var mapFormFilters = document.querySelector('.map__filters');
+
+  var mapPinMain = map.querySelector('.map__pin--main');
+  var mapPins = map.querySelector('.map__pins');
+  var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
+  var cardTemplate = document.querySelector('#card').content.querySelector('.map__card');
 
   mapPinMain.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
@@ -125,7 +123,6 @@
 
     return infoCard;
   };
-
 
   var onload = function (ads) {
     var fragment = document.createDocumentFragment();
