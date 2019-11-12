@@ -100,53 +100,53 @@
       document.body.removeChild(document.body.children[0]);
       document.removeEventListener('keydown', onMessageKeydown);
       document.removeEventListener('click', onMessageClick);
-
     }
+  };
+
+  var setInactiveMode = function () {
+    window.mapModule.map.classList.add('map--faded');
+    window.mapModule.mapPinMain.style.left = window.mapModule.MAP_START_X_COORDINATE + 'px';
+    window.mapModule.mapPinMain.style.top = window.mapModule.MAP_START_Y_COORDINATE + 'px';
+    for (var i = window.mapModule.mapPins.children.length - 1; i >= 2; i--) {
+      window.mapModule.mapPins.removeChild(window.mapModule.mapPins.children[i]);
+    }
+    window.mapModule.mapPinMain.addEventListener('click', window.util.onMainPinClick);
+
+    adForm.reset();
+    adForm.classList.add('ad-form--disabled');
+    window.util.setTagDesabled(window.formModule.formFieldsets);
+    window.util.setTagDesabled(window.mapModule.mapFormFilters);
+    window.formModule.addressInput.placeholder = 'x: 603 y: 407';
+    window.formModule.addressInput.readOnly = true;
   };
 
   var onFormSuccess = function () {
     var successMessageTemplate = document.querySelector('#success').content.querySelector('.success');
-
     (function () {
       var successMessage = successMessageTemplate.cloneNode(true);
       document.body.insertAdjacentElement('afterbegin', successMessage);
       document.addEventListener('click', onMessageClick);
       document.addEventListener('keydown', onMessageKeydown);
-
-      window.mapModule.map.classList.add('map--faded');
-      window.mapModule.mapPinMain.style.left = window.mapModule.MAP_START_X_COORDINATE + 'px';
-      window.mapModule.mapPinMain.style.top = window.mapModule.MAP_START_Y_COORDINATE + 'px';
-      for (var i = window.mapModule.mapPins.children.length - 1; i >= 2; i--) {
-        window.mapModule.mapPins.removeChild(window.mapModule.mapPins.children[i]);
-      }
-      window.mapModule.mapPinMain.addEventListener('click', window.util.onMainPinClick);
-
-      adForm.reset();
-      adForm.classList.add('ad-form--disabled');
-      window.util.setTagDesabled(window.formModule.formFieldsets);
-      window.util.setTagDesabled(window.mapModule.mapFormFilters);
-      window.formModule.addressInput.placeholder = 'x: 603 y: 407';
-      window.formModule.addressInput.readOnly = true;
+      setInactiveMode();
     })();
-
   };
 
   var onFormError = function () {
     var errrorMessageTemplate = document.querySelector('#error').content.querySelector('.error');
-
     (function () {
       var errorMessage = errrorMessageTemplate.cloneNode(true);
       document.body.insertAdjacentElement('afterbegin', errorMessage);
       document.addEventListener('click', onMessageClick);
       document.addEventListener('keydown', onMessageKeydown);
     })();
-
   };
 
   adForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.dataSend(new FormData(adForm), onFormSuccess, onFormError);
   });
+
+  adForm.addEventListener('reset', setInactiveMode);
 
   window.formModule = {
     adForm: adForm,
