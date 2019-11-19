@@ -1,5 +1,6 @@
 'use strict';
 (function () {
+
   var NUMBER_OF_ADS_NEAR_BY = 5;
   var MAIN_PIN_SIZE = 65;
   var TAIL_PIN_SIZE = 22;
@@ -124,6 +125,7 @@
 
     return infoCard;
   };
+
 
   var onload = function (ads) {
     var fragment = document.createDocumentFragment();
