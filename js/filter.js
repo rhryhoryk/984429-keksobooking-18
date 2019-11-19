@@ -16,13 +16,13 @@
     var arrToRender = data.slice();
 
     if (houseType.value !== 'any') {
-      arrToRender = data.filter(function (element) {
+      arrToRender = arrToRender.filter(function (element) {
         return element.offer.type === houseType.value;
       });
     }
 
     if (housePrice.value !== 'any') {
-      arrToRender = data.filter(function (element) {
+      arrToRender = arrToRender.filter(function (element) {
         if (Number(element.offer.price) < LOW_HOUSE_PRICE) {
           element.offer.price = 'low';
         } else if (Number(element.offer.price) > HIGH_HOUSE_PRICE) {
@@ -35,13 +35,13 @@
     }
 
     if (houseRooms.value !== 'any') {
-      arrToRender = data.filter(function (element) {
+      arrToRender = arrToRender.filter(function (element) {
         return element.offer.rooms === Number(houseRooms.value);
       });
     }
 
     if (houseGuests.value !== 'any') {
-      arrToRender = data.filter(function (element) {
+      arrToRender = arrToRender.filter(function (element) {
         return element.offer.guests === Number(houseGuests.value);
       });
     }
@@ -49,7 +49,7 @@
     if (houseFearures.some(function (element) {
       return element.checked;
     })) {
-      arrToRender = data.filter(function (element) {
+      arrToRender = arrToRender.filter(function (element) {
 
         var fearures = houseFearures.slice();
         fearures = fearures.filter(function (el) {
