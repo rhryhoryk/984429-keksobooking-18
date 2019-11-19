@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var SERVER_OK_REQUEST = 200;
+  var SERVER_OK = 200;
 
   window.dataLoad = function (onload, onerror) {
     var URL = 'https://js.dump.academy/keksobooking/data';
@@ -10,7 +10,7 @@
     xhr.open('GET', URL);
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === SERVER_OK_REQUEST) {
+      if (xhr.status === SERVER_OK) {
         onload(xhr.response);
       } else {
         onerror();
@@ -26,7 +26,7 @@
     xhr.responseType = 'json';
 
     xhr.addEventListener('load', function () {
-      if (xhr.status === SERVER_OK_REQUEST) {
+      if (xhr.status === SERVER_OK) {
         onSuccess();
       } else {
         onError();
